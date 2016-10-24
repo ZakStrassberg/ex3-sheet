@@ -1,0 +1,21 @@
+{
+  "name": "ex3-sheet",
+  "description": "",
+  "main": "./bin/www",
+  "authors": [
+    "Zak Strassberg <zakstrassberg@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "vue": "^2.0.3"
+  }
+}

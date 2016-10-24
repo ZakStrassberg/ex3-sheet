@@ -1,0 +1,23 @@
+script(type="text/javascript").
+  Vue.component('dotscale', {
+    props: ['value', 'stat'],
+    template: '#dotscale-template',
+    data: function () {
+      return {
+        selected: 0
+      }
+    },
+    filters: {
+      capitalize: function ( value ) {
+        if ( !value ) return ''
+        value = value.toString()
+        return value.charAt( 0 ).toUpperCase() + value.slice( 1 )
+      }
+    }
+  })
+
+script#dotscale-template(type='text/x-template')
+  .dotscale(v-class="")
+    span {{ stat | capitalize }}:
+    span.dot(v-for="i in 5" @mouseenter="selected = i" @click="$emit('input', selected)", @mouseleave="selected = 0")
+      {{ Math.max(value, selected) >= i ? '&#x25cf;' : '&#x25cb;' }}
