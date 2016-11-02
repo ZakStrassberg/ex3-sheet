@@ -6,4 +6,7 @@ block content
     #attributes
       h2 Attributes
       // TODO: Think about moving this into the 3 attribute categories so it's more modular for grid construction
-      dotscale(v-for="(value, key) in attributes", v-model="value", :stat="key", @input="attributes[key] = value")
+      .attributeGroup(v-for="(value, group) in attributes")
+        p {{group}} - {{ value }}
+        p {{ attributeAllocations[group] }}
+        dotscale(v-for="(value, key) in attributes[group]", v-model="value", :stat="key", @input="attributes[group][key] = value")

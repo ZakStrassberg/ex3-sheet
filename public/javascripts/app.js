@@ -6,7 +6,7 @@ app = new Vue({
     attributePoints: {primary: 8, secondary: 6, tertiary: 4}, // TODO: convert this to exalt specfic
     attributes: {
       physical: {
-        strength: 1,
+        strength: 0,
         dexterity: 0,
         stamina: 0
       },
@@ -20,6 +20,11 @@ app = new Vue({
         manipulation: 0,
         appearance: 0
       }
+    },
+    attributeAllocations: {
+      physical: 'primary',
+      mental: 'secondary',
+      social: 'tertiary'
     }
   },
   methods: {
@@ -29,37 +34,40 @@ app = new Vue({
     }
   },
   computed: {
-    attributeRankings: function() { // TODO: Move this to a method?
-
+    attributeRankings: function() {
+      let results = {}
       for ( each in this.attributes ) {
         let dotSum = 0
         for ( attribute in this.attributes[each] ) {
           dotSum += this.attributes[each][attribute]
         }
         console.log(dotSum)
+        results[each]
       }
 
-      return  [ [this.attributes.physical, this.attributePoints.primary],
-                [this.attributes.mental, this.attributePoints.secondary],
-                [this.attributes.social, this.attributePoints.tertiary] ]
+      return  {
+        primary: 0,
+        secondary: 0,
+        tertiary: 0
+      }
     },
-    attributeAllocation: function() {
-      let results = []
-
-      for ( [ attributes , dots ] of this.attributeRankings ) {
-        let dotSum = 0
-        for (each in attributes ) {
-          dotSum += attributes[each]
-        }
-
-        if ( dotSum > dots ) {
-          results.push( { bonusPointsSpent: this.bonusSpent( dotSum - dots ) } )
-        } else {
-          results.push( { pointsLeft: dots - dotSum } )
-        }
-      }
-
-      return { primary: results[0], secondary: results[1], tertiary: results[2] }
-    }
+    // attributeAllocation: function() {
+    //   let results = []
+    //
+    //   for ( [ attributes , dots ] of this.attributeRankings ) {
+    //     let dotSum = 0
+    //     for (each in attributes ) {
+    //       dotSum += attributes[each]
+    //     }
+    //
+    //     if ( dotSum > dots ) {
+    //       results.push( { bonusPointsSpent: this.bonusSpent( dotSum - dots ) } )
+    //     } else {
+    //       results.push( { pointsLeft: dots - dotSum } )
+    //     }
+    //   }
+    //
+    //   return { primary: results[0], secondary: results[1], tertiary: results[2] }
+    // }
   }
 })
