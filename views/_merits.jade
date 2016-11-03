@@ -1,0 +1,43 @@
+script(type="text/javascript").
+  Vue.component('merits', {
+    props: ['merits'],
+    template: '#merits-template',
+    data: function () {
+      return {}
+    },
+    methods: {
+      addMerit: function(merit, value) {
+        let newMerit = {}
+        newMerit[merit] = value
+        this.merits.selected[merit] = value
+      }
+    },
+    filters: {
+      capitalize: function ( value ) {
+        if ( !value ) return ''
+        value = value.toString()
+        return value.charAt( 0 ).toUpperCase() + value.slice( 1 )
+      }
+    }
+  })
+
+script#merits-template(type='text/x-template')
+  .merits
+
+    p {{ merits.selected }}
+    .merit(v-for="(value, merit) in merits.selected")
+      span {{ merit + " " }}
+      span(v-for="i in value") &#x25cf;
+    .new.input-group
+      input.form-control(type="text")
+      .input-group-btn
+        button.btn.btn-secondary.dropdown-toggle(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Action
+        .dropdown-menu.dropdown-menu-right
+          template(v-for="(value, merit) in merits.available")
+            a.dropdown-item(v-for="each in value", @click="merits.selected[merit] = each")
+              span {{ merit + " " }}
+              span(v-for="i in each") &#x25cf;
+          .dropdown-divider(role="separator")
+          div.dropdown-item Supernatural
+          .dropdown-divider(role="separator")
+          div.dropdown-item Sorcerous
