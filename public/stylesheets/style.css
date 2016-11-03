@@ -6,7 +6,16 @@ body {
 a {
   color: #00B7FF; }
 
-#abilityList {
+#ability-list {
   column-count: 3; }
+
+button.caste {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px; }
+
+.dotscale {
+  display: inline-block; }
 
 /*# sourceMappingURL=style.css.map */

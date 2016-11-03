@@ -1,0 +1,25 @@
+script(type="text/javascript").
+  Vue.component('abilities', {
+    props: ['abilities', 'casteAbilities', 'abilitiesSelected'],
+    template: '#abilities-template',
+    data: function () {
+      return {}
+    },
+    methods: {},
+    filters: {
+      capitalize: function ( value ) {
+        if ( !value ) return ''
+        value = value.toString()
+        return value.charAt( 0 ).toUpperCase() + value.slice( 1 )
+      }
+    }
+  })
+
+script#abilities-template(type='text/x-template')
+  #ability-list
+    .ability(v-for="(value, key) in abilities")
+      //input(type="button", :value="buttonLogic(key)")
+      input.supernal(type="checkbox", v-bind:true-value="key", v-bind:false-value="undefined", v-show="casteAbilities.has(key) && abilitiesSelected.caste.includes(key) && ( !abilitiesSelected.supernal || abilitiesSelected.supernal == key )", v-model="abilitiesSelected.supernal")
+      input.caste(type="checkbox", :value="key", v-show="casteAbilities.has(key) && (abilitiesSelected.caste.includes(key) || abilitiesSelected.caste.length < 5) && ( abilitiesSelected.supernal != key && !abilitiesSelected.favored.includes(key) )", v-model="abilitiesSelected.caste")
+      input.favored(type="checkbox", :value="key", v-show="(abilitiesSelected.favored.includes(key) || abilitiesSelected.favored.length < 5) && !abilitiesSelected.caste.includes(key)", v-model="abilitiesSelected.favored")
+      dotscale(v-model="value", :stat="key", :type="'ability'", @input="abilities[key] = value")

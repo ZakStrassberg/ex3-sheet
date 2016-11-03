@@ -47,11 +47,14 @@ block content
             p {{ attributePointsSpent['social'] }}
 
     #abilities.row
+      h2.col-xs-12.text-xs-center Abilities
       .sheet.col-md-9
         .row
-          h2.col-xs-12.text-xs-center Abilities
-          #abilityList.col-xs-12
-            dotscale(v-for="(value, key) in abilities", v-model="value", :stat="key", :type="'ability'", @input="abilities[key] = value")
+          abilities.col-xs-12(:abilities="abilities", :caste-abilities="characterTypes[character.characterType].castes[character.caste]", :abilities-selected="abilitiesSelected")
+      .data.col-md-3
+        p {{ abilitiesSelected }}
+        p {{ abilityPointsSpent }}
+        p TODO: stress test ability point calculator
 
     #merits.row
       .sheet.col-md-9

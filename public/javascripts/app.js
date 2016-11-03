@@ -7,15 +7,16 @@ app = new Vue({
       name: '',
       player: '',
       characterType: 'solar',
+      caste: 'dawn',
       concept: '',
-      anima: '',
-      supernal: ''
+      anima: ''
     },
     characterTypes: {
       solar: {
         attributePoints: {primary: 8, secondary: 6, tertiary: 4},
+        abilityPoints: 28,
         castes: {
-          dawn: [],
+          dawn: new Set(['archery', 'awareness', 'brawl', 'dodge', 'melee', 'resistance', 'thrown', 'war']),
           zenith: [],
           twilight: [],
           night: [],
@@ -23,7 +24,8 @@ app = new Vue({
         }
       },
       mortal: {
-        attributePoints: {primary: 6, secondary: 4, tertiary: 3}
+        attributePoints: {primary: 6, secondary: 4, tertiary: 3},
+        abilityPoints: 28
       }
     },
     attributes: {
@@ -76,6 +78,11 @@ app = new Vue({
       thrown: 0,
       war: 0
     },
+    abilitiesSelected: {
+      caste: [],
+      favored: [],
+      supernal: ''
+    }
   },
   methods: {
     changeAttributePriority: function(group, priority) {
@@ -101,7 +108,7 @@ app = new Vue({
           dotSum += this.attributes[group][attribute] - 1
         }
         let total = this.characterTypes[this.character.characterType].attributePoints[this.attributePriority[group]]
-        let remaining = this.characterTypes[this.character.characterType].attributePoints[this.attributePriority[group]] - dotSum
+        let remaining = total - dotSum
         let bpSpent = 0
         if (remaining < 0) {
           bpSpent = this.attributePriority[group] == 'tertiary' ? Math.abs(remaining) * 3 : Math.abs(remaining) * 4
@@ -115,7 +122,43 @@ app = new Vue({
       }
       return results
     },
+    abilityPointsSpent: function() {
+      let total = this.characterTypes[this.character.characterType].abilityPoints
+      let unfavored = [0,0]
+      let casteOrFavored = [0,0]
+      let remaining = total
+      for (each in this.abilities) {
+        if ( this.abilitiesSelected.caste.includes(each) || this.abilitiesSelected.favored.includes(each) ) {
+          casteOrFavored[0] += Math.min(this.abilities[each], 3)
+          casteOrFavored[1] += Math.max(this.abilities[each] - 3, 0)
+        } else {
+          unfavored[0] += Math.min(this.abilities[each], 3)
+          unfavored[1] += Math.max(this.abilities[each] - 3, 0)
+        }
+      }
+      let used = Math.min(unfavored[0] + casteOrFavored[0], total)
 
+      while ( remaining > 0 ) {
+        if ( unfavored[0] > 0 ) {
+          unfavored[0]--
+          remaining--
+        } else if ( casteOrFavored[0] > 0 ) {
+          casteOrFavored[0]--
+          remaining--
+        } else {
+          break
+        }
+      }
+
+      bpSpent = (unfavored[0] + unfavored[1]) * 2 + casteOrFavored.reduce( function( a, b ) { return a + b } )
+
+      return {
+        total: total,
+        used: used,
+        remaining: total - used,
+        bonusPointsSpent: bpSpent
+      }
+    }
   },
   filters: {
     capitalize: function ( value ) {
