@@ -17,5 +17,8 @@
   ],
   "dependencies": {
     "vue": "^2.0.3"
+  },
+  "devDependencies": {
+    "bootstrap": "v4.0.0-alpha.5"
   }
 }

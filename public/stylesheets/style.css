@@ -1,9 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=IM+Fell+DW+Pica:400,400i");
 body {
   padding: 50px;
-  font: 14px 'IM Fell DW Pica', serif; }
+  font: 1.25rem 'IM Fell DW Pica', serif; }
 
 a {
   color: #00B7FF; }
+
+#abilityList {
+  column-count: 3; }
 
 /*# sourceMappingURL=style.css.map */

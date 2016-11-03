@@ -1,6 +1,6 @@
 script(type="text/javascript").
   Vue.component('dotscale', {
-    props: ['value', 'stat'],
+    props: ['value', 'stat', 'type'],
     template: '#dotscale-template',
     data: function () {
       return {
@@ -17,7 +17,8 @@ script(type="text/javascript").
   })
 
 script#dotscale-template(type='text/x-template')
-  .dotscale(v-class="")
+  .dotscale
     span {{ stat | capitalize }}:
+    span.dot(v-if="type == 'ability'", @mouseenter="selected = 0" @click="$emit('input', 0)", @mouseleave="selected = 0") x
     span.dot(v-for="i in 5" @mouseenter="selected = i" @click="$emit('input', selected)", @mouseleave="selected = 0")
       {{ Math.max(value, selected) >= i ? '&#x25cf;' : '&#x25cb;' }}

@@ -3,71 +3,122 @@ var app;
 app = new Vue({
   el: '#app',
   data: {
-    attributePoints: {primary: 8, secondary: 6, tertiary: 4}, // TODO: convert this to exalt specfic
-    attributes: {
-      physical: {
-        strength: 0,
-        dexterity: 0,
-        stamina: 0
-      },
-      mental: {
-        intelligence: 0,
-        perception: 0,
-        wits: 0
-      },
-      social: {
-        charisma: 0,
-        manipulation: 0,
-        appearance: 0
+    character: {
+      name: '',
+      player: '',
+      characterType: 'solar',
+      concept: '',
+      anima: '',
+      supernal: ''
+    },
+    characterTypes: {
+      solar: {
+        attributePoints: {primary: 8, secondary: 6, tertiary: 4},
+        castes: {
+          dawn: [],
+          zenith: [],
+          twilight: [],
+          night: [],
+          eclipse: []
+        }
       }
     },
-    attributeAllocations: {
+    attributes: {
+      physical: {
+        strength: 1,
+        dexterity: 1,
+        stamina: 1
+      },
+      mental: {
+        intelligence: 1,
+        perception: 1,
+        wits: 1
+      },
+      social: {
+        charisma: 1,
+        manipulation: 1,
+        appearance: 1
+      }
+    },
+    attributePriority: {
       physical: 'primary',
       mental: 'secondary',
       social: 'tertiary'
-    }
+    },
+    abilities: {
+      archery: 0,
+      athletics: 0,
+      awareness: 0,
+      brawl: 0,
+      bureaucracy: 0,
+      craft: 0,
+      dodge: 0,
+      integrity: 0,
+      investigation: 0,
+      larceny: 0,
+      linguistics: 0,
+      lore: 0,
+      martialArts: 0,
+      medicine: 0,
+      melee: 0,
+      occult: 0,
+      performance: 0,
+      presence: 0,
+      resistance: 0,
+      ride: 0,
+      sail: 0,
+      socialize: 0,
+      stealth: 0,
+      survival: 0,
+      thrown: 0,
+      war: 0
+    },
   },
   methods: {
-    log: function() {
-      console.log("log:")
-      console.log(this.attributes.mental)
-    }
+    changeAttributePriority: function(group, priority) {
+      priorities = new Set(['primary', 'secondary', 'tertiary'])
+      var toChange
+      for (each in this.attributePriority) {
+        if ( group != each ) {
+          priorities.delete(this.attributePriority[each])
+          if ( this.attributePriority[each] == priority ) {
+            toChange = each
+          }
+        } else { this.attributePriority[group] = priority }
+      }
+      this.attributePriority[toChange] = [...priorities][0]
+    },
   },
   computed: {
-    attributeRankings: function() {
+    attributePointsSpent: function() {
       let results = {}
-      for ( each in this.attributes ) {
+      for ( group in this.attributes ) {
         let dotSum = 0
-        for ( attribute in this.attributes[each] ) {
-          dotSum += this.attributes[each][attribute]
+        for ( attribute in this.attributes[group] ) {
+          dotSum += this.attributes[group][attribute] - 1
         }
-        console.log(dotSum)
-        results[each]
+        let total = this.characterTypes[this.character.characterType].attributePoints[this.attributePriority[group]]
+        let remaining = this.characterTypes[this.character.characterType].attributePoints[this.attributePriority[group]] - dotSum
+        let bpSpent = 0
+        if (remaining < 0) {
+          bpSpent = this.attributePriority[group] == 'tertiary' ? Math.abs(remaining) * 3 : Math.abs(remaining) * 4
+        }
+        results[group] = {
+          total: total,
+          used: dotSum,
+          remaining: remaining,
+          bonusPointsSpent: bpSpent
+        }
       }
-
-      return  {
-        primary: 0,
-        secondary: 0,
-        tertiary: 0
-      }
+      return results
     },
-    // attributeAllocation: function() {
-    //   let results = []
-    //
-    //   for ( [ attributes , dots ] of this.attributeRankings ) {
-    //     let dotSum = 0
-    //     for (each in attributes ) {
-    //       dotSum += attributes[each]
-    //     }
-    //
-    //     if ( dotSum > dots ) {
-    //       results.push( { bonusPointsSpent: this.bonusSpent( dotSum - dots ) } )
-    //     } else {
-    //       results.push( { pointsLeft: dots - dotSum } )
-    //     }
-    //   }
-    //
-    //   return { primary: results[0], secondary: results[1], tertiary: results[2] }
-    // }
+
+  },
+  filters: {
+    capitalize: function ( value ) {
+      if ( !value ) return ''
+      value = value.toString()
+      return value.charAt( 0 ).toUpperCase() + value.slice( 1 )
+    }
   }
 })
