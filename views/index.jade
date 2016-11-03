@@ -70,8 +70,8 @@ block content
       h2.col-xs-12.text-xs-center Intimacies
       .sheet.col-md-9
         .row
-          .intimacy(v-for="intimacy in intimacies.selected")
-            span {{ intimacy.details }} - {{intimacy.level | capitalize }} {{ intimacy.type | capitalize }}
+          draggable.intimacies(@start="dragging=true", @end="dragging=false")
+            .intimacy(v-for="intimacy in intimacies.selected") {{ intimacy.details }} - {{intimacy.level | capitalize }} {{ intimacy.type | capitalize }}
           .new.input-group.col-xs-12
             input.form-control(type="text", placeholder="details", v-model="intimacies.new.details")
             span.input-group-addon

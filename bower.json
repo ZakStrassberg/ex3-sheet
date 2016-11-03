@@ -19,6 +19,7 @@
     "vue": "^2.0.3"
   },
   "devDependencies": {
-    "bootstrap": "v4.0.0-alpha.5"
+    "bootstrap": "v4.0.0-alpha.5",
+    "vue.draggable": "^2.3.1"
   }
 }
