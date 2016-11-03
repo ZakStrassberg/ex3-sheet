@@ -1,26 +1,11 @@
 script(type="text/javascript").
   Vue.component('abilities', {
-    props: ['abilities', 'casteAbilities'],
+    props: ['abilities', 'casteAbilities', 'abilitiesSelected'],
     template: '#abilities-template',
     data: function () {
-      return {
-        caste: new Set(),
-        favored: new Set()
-      }
+      return {}
     },
-    methods: {
-      buttonLogic: function(ability) {
-        if (this.casteAbilities.has(ability) && !this.caste.has(ability) && this.caste.size < 5) {
-          return "c"
-        } else if (this.caste.has(ability)) {
-          return "C"
-        } else if (!this.favored.has(ability) && this.favored.size < 5) {
-          return "f"
-        } else if (this.favored.has(ability)) {
-          return "F"
-        }
-      }
-    },
+    methods: {},
     filters: {
       capitalize: function ( value ) {
         if ( !value ) return ''
@@ -33,5 +18,8 @@ script(type="text/javascript").
 script#abilities-template(type='text/x-template')
   #ability-list
     .ability(v-for="(value, key) in abilities")
-      input(type="button", :value="buttonLogic(key)")
+      //input(type="button", :value="buttonLogic(key)")
+      input.supernal(type="checkbox", v-bind:true-value="key", v-bind:false-value="undefined", v-show="casteAbilities.has(key) && abilitiesSelected.caste.includes(key) && ( !abilitiesSelected.supernal || abilitiesSelected.supernal == key )", v-model="abilitiesSelected.supernal")
+      input.caste(type="checkbox", :value="key", v-show="casteAbilities.has(key) && (abilitiesSelected.caste.includes(key) || abilitiesSelected.caste.length < 5) && ( abilitiesSelected.supernal != key && !abilitiesSelected.favored.includes(key) )", v-model="abilitiesSelected.caste")
+      input.favored(type="checkbox", :value="key", v-show="(abilitiesSelected.favored.includes(key) || abilitiesSelected.favored.length < 5) && !abilitiesSelected.caste.includes(key)", v-model="abilitiesSelected.favored")
       dotscale(v-model="value", :stat="key", :type="'ability'", @input="abilities[key] = value")
