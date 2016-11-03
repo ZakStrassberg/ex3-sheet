@@ -21,6 +21,9 @@ app = new Vue({
           night: [],
           eclipse: []
         }
+      },
+      mortal: {
+        attributePoints: {primary: 6, secondary: 4, tertiary: 3}
       }
     },
     attributes: {

@@ -2,6 +2,22 @@ extends layout
 
 block content
   #app
+    #character.col-xs-12
+      .row
+        h1.col-xs-6
+          input(v-model="character.name", placeholder="Harmonious Jade")
+        label.col-xs-6
+          input(type="text", v-model="character.concept", placeholder="Concept")
+        label.col-xs-12
+          | Player:
+          input(v-model="character.player", placeholder="")
+        label.col-xs-12
+          | Character type:
+          select(v-model="character.characterType")
+            option(v-for="(value, key) in characterTypes", :value="key") {{ key | capitalize }}
+        label.col-xs-12
+          | Anima:
+          input(type="text", v-model="character.anima")
     #attributes.col-xs-12
       h2.col-xs-12.text-xs-center Attributes
       .row
@@ -36,3 +52,8 @@ block content
           h2.col-xs-12.text-xs-center Abilities
           #abilityList.col-xs-12
             dotscale(v-for="(value, key) in abilities", v-model="value", :stat="key", :type="'ability'", @input="abilities[key] = value")
+
+    #merits.row
+      .sheet.col-md-9
+        .row
+          h2.col-xs-12.text-xs-center Merits
