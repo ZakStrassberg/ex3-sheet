@@ -50,8 +50,7 @@ block content
       .sheet.col-md-9
         .row
           h2.col-xs-12.text-xs-center Abilities
-          #abilityList.col-xs-12
-            dotscale(v-for="(value, key) in abilities", v-model="value", :stat="key", :type="'ability'", @input="abilities[key] = value")
+          abilities.col-xs-12(:abilities="abilities", :caste-abilities="characterTypes[character.characterType].castes[character.caste]")
 
     #merits.row
       .sheet.col-md-9

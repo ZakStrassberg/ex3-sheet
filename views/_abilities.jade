@@ -1,0 +1,37 @@
+script(type="text/javascript").
+  Vue.component('abilities', {
+    props: ['abilities', 'casteAbilities'],
+    template: '#abilities-template',
+    data: function () {
+      return {
+        caste: new Set(),
+        favored: new Set()
+      }
+    },
+    methods: {
+      buttonLogic: function(ability) {
+        if (this.casteAbilities.has(ability) && !this.caste.has(ability) && this.caste.size < 5) {
+          return "c"
+        } else if (this.caste.has(ability)) {
+          return "C"
+        } else if (!this.favored.has(ability) && this.favored.size < 5) {
+          return "f"
+        } else if (this.favored.has(ability)) {
+          return "F"
+        }
+      }
+    },
+    filters: {
+      capitalize: function ( value ) {
+        if ( !value ) return ''
+        value = value.toString()
+        return value.charAt( 0 ).toUpperCase() + value.slice( 1 )
+      }
+    }
+  })
+
+script#abilities-template(type='text/x-template')
+  #ability-list
+    .ability(v-for="(value, key) in abilities")
+      input(type="button", :value="buttonLogic(key)")
+      dotscale(v-model="value", :stat="key", :type="'ability'", @input="abilities[key] = value")

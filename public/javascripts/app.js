@@ -7,6 +7,7 @@ app = new Vue({
       name: '',
       player: '',
       characterType: 'solar',
+      caste: 'dawn',
       concept: '',
       anima: '',
       supernal: ''
@@ -15,7 +16,7 @@ app = new Vue({
       solar: {
         attributePoints: {primary: 8, secondary: 6, tertiary: 4},
         castes: {
-          dawn: [],
+          dawn: new Set(['archery', 'awareness', 'brawl', 'dodge', 'melee', 'resistance', 'thrown', 'war']),
           zenith: [],
           twilight: [],
           night: [],
