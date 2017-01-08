@@ -23,7 +23,6 @@ script(type="text/javascript").
 
 script#merits-template(type='text/x-template')
   .merits
-
     p {{ merits.selected }}
     .merit(v-for="(value, merit) in merits.selected")
       span {{ merit + " " }}
