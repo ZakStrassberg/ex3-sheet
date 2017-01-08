@@ -7,9 +7,10 @@ script(type="text/javascript").
     },
     methods: {
       addMerit: function(merit, value) {
+        console.log(merit, value)
         let newMerit = {}
         newMerit[merit] = value
-        this.merits.selected[merit] = value
+        this.$set(this.merits.selected, merit, value)
       }
     },
     filters: {
@@ -33,7 +34,7 @@ script#merits-template(type='text/x-template')
         button.btn.btn-secondary.dropdown-toggle(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Action
         .dropdown-menu.dropdown-menu-right
           template(v-for="(value, merit) in merits.available")
-            a.dropdown-item(v-for="each in value", @click="merits.selected[merit] = each")
+            a.dropdown-item(v-for="each in value", @click="addMerit(merit, each)")
               span {{ merit + " " }}
               span(v-for="i in each") &#x25cf;
           .dropdown-divider(role="separator")
