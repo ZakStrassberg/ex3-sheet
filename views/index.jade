@@ -32,7 +32,7 @@ block content
                 label.btn.btn-outline-info(v-for="priority in ['primary', 'secondary', 'tertiary']", :class="{ active : attributePriority[group] == priority  }")
                   input(type="radio", :value="priority", @click="changeAttributePriority(group, priority)", autocomplete="off")
                   | {{ priority }}
-              dotscale(v-for="(value, key) in attributes[group]", v-model="value", :stat="key", :type="'attribute'", @input="attributes[group][key] = value")
+              dotscale(v-for="(value, key) in attributes[group]", :value="value", :stat="key", :type="'attribute'", @input="attributes[group][key] = arguments[0]")
               p points remaining: {{ attributePointsSpent[group].remaining }}
               p BP spent: {{ attributePointsSpent[group].bonusPointsSpent }}
         .data.col-md-3

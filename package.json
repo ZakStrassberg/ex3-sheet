@@ -18,6 +18,7 @@
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
+    "eslint": "^3.9.1",
     "vue-devtools": "^2.0.4"
   }
 }
