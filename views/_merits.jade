@@ -3,14 +3,13 @@ script(type="text/javascript").
     props: ['merits'],
     template: '#merits-template',
     data: function () {
-      return {}
+      return {
+        newMerit: null
+      }
     },
     methods: {
-      addMerit: function(merit, value) {
-        console.log(merit, value)
-        let newMerit = {}
-        newMerit[merit] = value
-        this.$set(this.merits.selected, merit, value)
+      addMerit: function(newMerit) {
+        this.$set(this.merits.selected, newMerit.merit, newMerit.value)
       }
     },
     filters: {
@@ -26,18 +25,20 @@ script#merits-template(type='text/x-template')
   .merits
     p {{ merits.selected }}
     .merit(v-for="(value, merit) in merits.selected")
+
       span {{ merit + " " }}
       span(v-for="i in value") &#x25cf;
     .new.input-group
-      input.form-control(type="text")
       .input-group-btn
-        button.btn.btn-secondary.dropdown-toggle(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Action
+        button.btn.btn-secondary.dropdown-toggle(type="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") {{ newMerit? newMerit.merit + " " + newMerit.value : 'Select a merit' }}
         .dropdown-menu.dropdown-menu-right
-          template(v-for="(value, merit) in merits.available")
-            a.dropdown-item(v-for="each in value", @click="addMerit(merit, each)")
+          template(v-for="(values, merit) in merits.available")
+            a.dropdown-item(v-for="value in values", @click="newMerit = {merit, value}")
               span {{ merit + " " }}
-              span(v-for="i in each") &#x25cf;
+              span(v-for="i in value") &#x25cf;
           .dropdown-divider(role="separator")
           div.dropdown-item Supernatural
           .dropdown-divider(role="separator")
           div.dropdown-item Sorcerous
+      input.form-control(type="text")
+      button.btn-btn-secondary(@click="addMerit(newMerit)") Add

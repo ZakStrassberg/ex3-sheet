@@ -3,14 +3,15 @@ html
   head
     title= title
     //link(rel='stylesheet', href='/tether/dist/css/tether.min.css')
-    link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap-flex.min.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css', integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ', crossorigin='anonymous')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(type='text/javascript', src='/vue/dist/vue.js')
-    //script(type='text/javascript', src='/tether/dist/tether.min.js')
-    script(type='text/javascript', src='/jquery/dist/jquery.min.js')
-    script(type='text/javascript', src='/bootstrap/dist/js/bootstrap.min.js')
+    script(src='https://code.jquery.com/jquery-3.1.1.slim.min.js', integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n', crossorigin='anonymous')
+    //script(src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js', integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb', crossorigin='anonymous')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js', integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn', crossorigin='anonymous')
     script(type='text/javascript', src='/Sortable/Sortable.js')
     script(type='text/javascript', src='/vue.draggable/dist/vuedraggable.min.js')
+
   body.container
     block content
     include _dotscale.jade
