@@ -1,0 +1,21 @@
+script(type="text/javascript").
+  Vue.component('attributes', {
+    props: ['attributes'],
+    template: '#attributes-template',
+    data: function () {
+      return {}
+    },
+    methods: {},
+    filters: {
+      capitalize: function ( value ) {
+        if ( !value ) return ''
+        value = value.toString()
+        return value.charAt( 0 ).toUpperCase() + value.slice( 1 )
+      }
+    }
+  })
+
+script#attributes-template(type='text/x-template')
+  #attributeList
+    .attributeGroup(v-for="(each, key) in attributes")
+      p {{key | capitalize }}

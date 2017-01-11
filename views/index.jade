@@ -24,6 +24,9 @@ block content
       h2.row.col Attributes
       .row
         .sheet.col-9
+          attributes.col(:attributes = "attributes")
+        .data.col-3
+          p test
 
     #abilities
       h2.row.col Abilities
@@ -50,33 +53,7 @@ block content
     #intimacies.row
 
 
-      #attributes
-        .row
-          h2.col Attributes
-        .row
-          .sheet.col-9.row
-            .attributeGroup.col-md-4(v-for="(value, group) in attributes")
-              h3 {{ group | capitalize }}
-              //p {{group}} - {{ value }}
-              //p {{ attributeAllocations[group] }}
 
-              .btn-group.btn-group-sm(role="group", data-toggle="buttons")
-                label.btn.btn-outline-info(v-for="priority in ['primary', 'secondary', 'tertiary']", :class="{ active : attributePriority[group] == priority  }")
-                  input(type="radio", :value="priority", @click="changeAttributePriority(group, priority)", autocomplete="off")
-                  | {{ priority }}
-              dotscale(v-for="(value, key) in attributes[group]", :value="value", :stat="key", :type="'attribute'", @input="attributes[group][key] = arguments[0]")
-              p points remaining: {{ attributePointsSpent[group].remaining }}
-              p BP spent: {{ attributePointsSpent[group].bonusPointsSpent }}
-          .data.col-3
-            .physical
-              h5 Physical ({{ attributePriority['physical'] }})
-              p {{ attributePointsSpent['physical'] }}
-            .mental
-              h5 mental ({{ attributePriority['mental'] }})
-              p {{ attributePointsSpent['mental'] }}
-            .social
-              h5 Social ({{ attributePriority['social'] }})
-              p {{ attributePointsSpent['social'] }}
 
 
 

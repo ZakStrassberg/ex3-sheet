@@ -30,25 +30,29 @@ app = new Vue({
     },
     attributes: {
       physical: {
-        strength: 1,
-        dexterity: 1,
-        stamina: 1
+        priority: 'primary',
+        stats: {
+          strength: 1,
+          dexterity: 1,
+          stamina: 1
+        }
       },
       mental: {
-        intelligence: 1,
-        perception: 1,
-        wits: 1
+        priority: 'secondary',
+        stats: {
+          intelligence: 1,
+          perception: 1,
+          wits: 1
+        }
       },
       social: {
-        charisma: 1,
-        manipulation: 1,
-        appearance: 1
+        priority: 'tertiary',
+        stats: {
+          charisma: 1,
+          manipulation: 1,
+          appearance: 1
+        }
       }
-    },
-    attributePriority: {
-      physical: 'primary',
-      mental: 'secondary',
-      social: 'tertiary'
     },
     abilities: {
       archery: 0,
