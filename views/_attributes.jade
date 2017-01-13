@@ -18,6 +18,11 @@ script(type="text/javascript").
         // swap the priorities of attributes1 and 2
         [ attribute1.priority, attribute2.priority ] = [ attribute2.priority, attribute1.priority ]
       }
+      ,
+      log: function(x) {
+        console.log("test")
+        console.log(x);
+      }
     },
     filters: {
       capitalize: function ( value ) {
@@ -29,11 +34,16 @@ script(type="text/javascript").
   })
 
 script#attributes-template(type='text/x-template')
-  #attributeList
-    .attributeGroup.col(v-for="(each, attribute) in attributes")
-      p {{attribute | capitalize }}
-      p {{ attributes[attribute].priority }}
-      .btn-group.btn-group-sm(role="group", data-toggle="buttons")
-        label.btn.btn-outline-info(v-for="priority in ['primary', 'secondary', 'tertiary']", :class="{ active : attributes[attribute].priority == priority  }")
-          input(type="radio", :value="priority", autocomplete="off")
-          span(@click="changeAttributePriority(attribute, priority)") {{ priority }}
+  #attributes
+    h2.row.col Attributes
+    .row
+      .sheet.col-9.row
+        .attributeGroup.col(v-for="(each, attribute) in attributes")
+          p {{attribute | capitalize }}
+          .btn-group.btn-group-sm(role="group", data-toggle="buttons")
+            label.btn.btn-outline-info(v-for="priority in ['primary', 'secondary', 'tertiary']", :class="{ active : attributes[attribute].priority == priority  }")
+              input(type="radio", :value="priority", autocomplete="off")
+              span(@click="changeAttributePriority(attribute, priority)") {{ priority }}
+          dotscale.row.col(v-for="(value, stat) in attributes[attribute].stats", :value="value", :stat="stat", :type="'attribute'", @input="attributes[attribute].stats[stat] = arguments[0]")
+      .data.col-3.row
+        p points spent calculations will go here. key off of character attribute? record bonus point expenditures etc there?
