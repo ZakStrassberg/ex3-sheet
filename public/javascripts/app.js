@@ -162,19 +162,7 @@ app = new Vue({
     }
   },
   methods: {
-    changeAttributePriority: function(group, priority) {
-      priorities = new Set(['primary', 'secondary', 'tertiary'])
-      var toChange
-      for (each in this.attributePriority) {
-        if ( group != each ) {
-          priorities.delete(this.attributePriority[each])
-          if ( this.attributePriority[each] == priority ) {
-            toChange = each
-          }
-        } else { this.attributePriority[group] = priority }
-      }
-      this.attributePriority[toChange] = [...priorities][0]
-    },
+    
   },
   computed: {
     attributePointsSpent: function() {

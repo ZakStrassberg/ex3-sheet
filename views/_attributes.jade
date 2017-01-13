@@ -5,7 +5,20 @@ script(type="text/javascript").
     data: function () {
       return {}
     },
-    methods: {},
+    methods: {
+      changeAttributePriority: function(attribute, priority) {
+        // set attribute1 as the attribute we are switching
+        var attribute1 = this.attributes[attribute], attribute2
+        for ( each in this.attributes ) {
+          // find the attribute that has the priority we're switching to
+          if ( this.attributes[each].priority == priority ) {
+            attribute2 = this.attributes[each]
+          }
+        }
+        // swap the priorities of attributes1 and 2
+        [ attribute1.priority, attribute2.priority ] = [ attribute2.priority, attribute1.priority ]
+      }
+    },
     filters: {
       capitalize: function ( value ) {
         if ( !value ) return ''
@@ -17,5 +30,10 @@ script(type="text/javascript").
 
 script#attributes-template(type='text/x-template')
   #attributeList
-    .attributeGroup(v-for="(each, key) in attributes")
-      p {{key | capitalize }}
+    .attributeGroup.col(v-for="(each, attribute) in attributes")
+      p {{attribute | capitalize }}
+      p {{ attributes[attribute].priority }}
+      .btn-group.btn-group-sm(role="group", data-toggle="buttons")
+        label.btn.btn-outline-info(v-for="priority in ['primary', 'secondary', 'tertiary']", :class="{ active : attributes[attribute].priority == priority  }")
+          input(type="radio", :value="priority", autocomplete="off")
+          span(@click="changeAttributePriority(attribute, priority)") {{ priority }}
