@@ -30,6 +30,53 @@ script(type="text/javascript").
         value = value.toString()
         return value.charAt( 0 ).toUpperCase() + value.slice( 1 )
       }
+    },
+    computed: {
+      attributePointsSpent: function() {
+        // lets try to see if I can have this send a message up to the parent when it computes new data
+        var total = {
+          physical: 0,
+          mental: 0,
+          social: 0
+        };
+
+        for ( group in this.attributes ) {
+          /*console.log(group)*/
+          let dotSum = 0;
+          for ( attribute in this.attributes[group].stats ) {
+            dotSum += this.attributes[group].stats[attribute] - 1
+          }
+          /*console.log(dotSum)*/
+          // the problem is that I can't get characterTypes from this component. Should I pass it in?
+          /*let total = this.characterTypes[this.character.characterType].attributePoints[this.attributePriority[group]]*/
+          console.log(total)
+        }
+
+        //
+        return total;
+
+        /*
+        let results = {}
+        for ( group in this.attributes ) {
+          let dotSum = 0
+          for ( attribute in this.attributes[group] ) {
+            dotSum += this.attributes[group][attribute] - 1
+          }
+          let total = this.characterTypes[this.character.characterType].attributePoints[this.attributePriority[group]]
+          let remaining = total - dotSum
+          let bpSpent = 0
+          if (remaining < 0) {
+            bpSpent = this.attributePriority[group] == 'tertiary' ? Math.abs(remaining) * 3 : Math.abs(remaining) * 4
+          }
+          results[group] = {
+            total: total,
+            used: dotSum,
+            remaining: remaining,
+            bonusPointsSpent: bpSpent
+          }
+        }
+        return results*/
+      }
     }
   })
 

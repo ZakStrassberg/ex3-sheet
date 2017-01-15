@@ -162,31 +162,9 @@ app = new Vue({
     }
   },
   methods: {
-    
+
   },
   computed: {
-    attributePointsSpent: function() {
-      let results = {}
-      for ( group in this.attributes ) {
-        let dotSum = 0
-        for ( attribute in this.attributes[group] ) {
-          dotSum += this.attributes[group][attribute] - 1
-        }
-        let total = this.characterTypes[this.character.characterType].attributePoints[this.attributePriority[group]]
-        let remaining = total - dotSum
-        let bpSpent = 0
-        if (remaining < 0) {
-          bpSpent = this.attributePriority[group] == 'tertiary' ? Math.abs(remaining) * 3 : Math.abs(remaining) * 4
-        }
-        results[group] = {
-          total: total,
-          used: dotSum,
-          remaining: remaining,
-          bonusPointsSpent: bpSpent
-        }
-      }
-      return results
-    },
     abilityPointsSpent: function() {
       let total = this.characterTypes[this.character.characterType].abilityPoints
       let unfavored = [0,0]
