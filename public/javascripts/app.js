@@ -182,7 +182,7 @@ app = new Vue({
   computed: {
     bonusPoints: function() {
       let total = this.characterTypes[this.character.characterType].bonusPoints
-      let spent = this.abilityPointsSpent.bonusPointsSpent + this.attributPointsSpent.bonusPointsSpent
+      let spent = this.abilityPointsSpent.bonusPointsSpent + this.attributePointsSpent.bonusPointsSpent
       let remaining = total - spent
       return {
         total: total,
@@ -205,11 +205,20 @@ app = new Vue({
         social: total[this.attributes.social.priority] - used.social,
         mental: total[this.attributes.mental.priority] - used.mental
       }
-      let bpSpent = used.physical + used.mental + used.social
+
+      let phyMult = this.attributes.physical.priority == 'tertiary' ? 3 : 4
+      let menMult = this.attributes.mental.priority == 'tertiary' ? 3 : 4
+      let socMult = this.attributes.social.priority == 'tertiary' ? 3 : 4
+
+      let bpSpent = Math.abs(Math.min(0, remaining.physical)) * phyMult +
+                    Math.abs(Math.min(0, remaining.mental)) * menMult +
+                    Math.abs(Math.min(0, remaining.social)) * socMult
+
       return {
         total: total,
         used: used,
         remaining: remaining,
+        // maybe split this into one per group
         bonusPointsSpent: bpSpent
       }
     },
