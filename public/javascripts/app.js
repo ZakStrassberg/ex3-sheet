@@ -3,6 +3,20 @@ var app;
 app = new Vue({
   el: '#app',
   data: {
+    // character1: {
+    //   details: {
+    //     name: '',
+    //     player: '',
+    //     characterType: 'solar',
+    //     caste: 'dawn',
+    //     concept: '',
+    //     anima: ''
+    //   },
+    //   attributes: {},
+    //   abilities: {},
+    //   merits: {},
+    //   intimacies: {}
+    // },
     character: {
       name: '',
       player: '',
@@ -15,6 +29,7 @@ app = new Vue({
       solar: {
         attributePoints: {primary: 8, secondary: 6, tertiary: 4},
         abilityPoints: 28,
+        bonusPoints: 15,
         castes: {
           dawn: new Set(['archery', 'awareness', 'brawl', 'dodge', 'melee', 'resistance', 'thrown', 'war']),
           zenith: [],
@@ -165,6 +180,39 @@ app = new Vue({
 
   },
   computed: {
+    bonusPoints: function() {
+      let total = this.characterTypes[this.character.characterType].bonusPoints
+      let spent = this.abilityPointsSpent.bonusPointsSpent + this.attributPointsSpent.bonusPointsSpent
+      let remaining = total - spent
+      return {
+        total: total,
+        spent: spent,
+        remaining: remaining
+      }
+    },
+    attributePointsSpent: function() {
+      let total = this.characterTypes[this.character.characterType].attributePoints
+      let used = {}
+      for ( group in this.attributes ) {
+        let dotSum = 0;
+        for ( attribute in this.attributes[group].stats ) {
+            dotSum += this.attributes[group].stats[attribute] - 1
+        }
+        used[group] = dotSum
+      }
+      let remaining = {
+        physical: total[this.attributes.physical.priority] - used.physical,
+        social: total[this.attributes.social.priority] - used.social,
+        mental: total[this.attributes.mental.priority] - used.mental
+      }
+      let bpSpent = used.physical + used.mental + used.social
+      return {
+        total: total,
+        used: used,
+        remaining: remaining,
+        bonusPointsSpent: bpSpent
+      }
+    },
     abilityPointsSpent: function() {
       let total = this.characterTypes[this.character.characterType].abilityPoints
       let unfavored = [0,0]

@@ -1,96 +1,95 @@
 script(type="text/javascript").
-  Vue.component('attributes', {
-    props: ['attributes'],
-    template: '#attributes-template',
-    data: function () {
-      return {}
-    },
-    methods: {
-      changeAttributePriority: function(attribute, priority) {
-        // set attribute1 as the attribute we are switching
-        var attribute1 = this.attributes[attribute], attribute2
-        for ( each in this.attributes ) {
-          // find the attribute that has the priority we're switching to
-          if ( this.attributes[each].priority == priority ) {
-            attribute2 = this.attributes[each]
-          }
-        }
-        // swap the priorities of attributes1 and 2
-        [ attribute1.priority, attribute2.priority ] = [ attribute2.priority, attribute1.priority ]
-      }
-      ,
-      log: function(x) {
-        console.log("test")
-        console.log(x);
-      }
-    },
-    filters: {
-      capitalize: function ( value ) {
-        if ( !value ) return ''
-        value = value.toString()
-        return value.charAt( 0 ).toUpperCase() + value.slice( 1 )
-      }
-    },
-    computed: {
-      attributePointsSpent: function() {
-        // lets try to see if I can have this send a message up to the parent when it computes new data
-        var total = {
-          physical: 0,
-          mental: 0,
-          social: 0
-        };
+    Vue.component('attributes', {
+        props: ['attributes'],
+        template: '#attributes-template',
+        data: function () {
+            return {}
+        },
+        methods: {
+            changeAttributePriority: function(attribute, priority) {
+                // set attribute1 as the attribute we are switching
+                var attribute1 = this.attributes[attribute], attribute2
+                for ( each in this.attributes ) {
+                    // find the attribute that has the priority we're switching to
+                    if ( this.attributes[each].priority == priority ) {
+                        attribute2 = this.attributes[each]
+                    }
+                }
+                // swap the priorities of attributes1 and 2
+                [ attribute1.priority, attribute2.priority ] = [ attribute2.priority, attribute1.priority ]
+            },
+            log: function(x) {
+                console.log("test")
+                console.log(x);
+            }
+        },
+        filters: {
+            capitalize: function ( value ) {
+                if ( !value ) return ''
+                value = value.toString()
+                return value.charAt( 0 ).toUpperCase() + value.slice( 1 )
+            }
+        },
+        computed: {
+            attributePointsSpent: function() {
+                // lets try to see if I can have this send a message up to the parent when it computes new data
+                var total = {
+                    physical: 0,
+                    mental: 0,
+                    social: 0
+                };
 
-        for ( group in this.attributes ) {
-          /*console.log(group)*/
-          let dotSum = 0;
-          for ( attribute in this.attributes[group].stats ) {
-            dotSum += this.attributes[group].stats[attribute] - 1
-          }
-          /*console.log(dotSum)*/
-          // the problem is that I can't get characterTypes from this component. Should I pass it in?
-          /*let total = this.characterTypes[this.character.characterType].attributePoints[this.attributePriority[group]]*/
-          console.log(total)
-        }
+                for ( group in this.attributes ) {
+                    /*console.log(group)*/
+                    let dotSum = 0;
+                    for ( attribute in this.attributes[group].stats ) {
+                        dotSum += this.attributes[group].stats[attribute] - 1
+                    }
+                    /*console.log(dotSum)*/
+                    // the problem is that I can't get characterTypes from this component. Should I pass it in?
+                    /*let total = this.characterTypes[this.character.characterType].attributePoints[this.attributePriority[group]]*/
+                    console.log(total)
+                }
 
-        //
-        return total;
+                //
+                return total;
 
-        /*
-        let results = {}
-        for ( group in this.attributes ) {
-          let dotSum = 0
-          for ( attribute in this.attributes[group] ) {
-            dotSum += this.attributes[group][attribute] - 1
-          }
-          let total = this.characterTypes[this.character.characterType].attributePoints[this.attributePriority[group]]
-          let remaining = total - dotSum
-          let bpSpent = 0
-          if (remaining < 0) {
-            bpSpent = this.attributePriority[group] == 'tertiary' ? Math.abs(remaining) * 3 : Math.abs(remaining) * 4
-          }
-          results[group] = {
-            total: total,
-            used: dotSum,
-            remaining: remaining,
-            bonusPointsSpent: bpSpent
-          }
+                /*
+                let results = {}
+                for ( group in this.attributes ) {
+                    let dotSum = 0
+                    for ( attribute in this.attributes[group] ) {
+                        dotSum += this.attributes[group][attribute] - 1
+                    }
+                    let total = this.characterTypes[this.character.characterType].attributePoints[this.attributePriority[group]]
+                    let remaining = total - dotSum
+                    let bpSpent = 0
+                    if (remaining < 0) {
+                        bpSpent = this.attributePriority[group] == 'tertiary' ? Math.abs(remaining) * 3 : Math.abs(remaining) * 4
+                    }
+                    results[group] = {
+                        total: total,
+                        used: dotSum,
+                        remaining: remaining,
+                        bonusPointsSpent: bpSpent
+                    }
+                }
+                return results*/
+            }
         }
-        return results*/
-      }
-    }
-  })
+    })
 
 script#attributes-template(type='text/x-template')
-  #attributes
-    h2.row.col Attributes
-    .row
-      .sheet.col-9.row
-        .attributeGroup.col(v-for="(each, attribute) in attributes")
-          p {{attribute | capitalize }}
-          .btn-group.btn-group-sm(role="group", data-toggle="buttons")
-            label.btn.btn-outline-info(v-for="priority in ['primary', 'secondary', 'tertiary']", :class="{ active : attributes[attribute].priority == priority  }")
-              input(type="radio", :value="priority", autocomplete="off")
-              span(@click="changeAttributePriority(attribute, priority)") {{ priority }}
-          dotscale.row.col(v-for="(value, stat) in attributes[attribute].stats", :value="value", :stat="stat", :type="'attribute'", @input="attributes[attribute].stats[stat] = arguments[0]")
-      .data.col-3.row
-        p points spent calculations will go here. key off of character attribute? record bonus point expenditures etc there?
+    #attributes
+        h2.row.col Attributes
+        .row
+            .sheet.col-9.row
+                .attributeGroup.col(v-for="(each, attribute) in attributes")
+                    p {{attribute | capitalize }}
+                    .btn-group.btn-group-sm(role="group", data-toggle="buttons")
+                        label.btn.btn-outline-info(v-for="priority in ['primary', 'secondary', 'tertiary']", :class="{ active : attributes[attribute].priority == priority  }")
+                            input(type="radio", :value="priority", autocomplete="off")
+                            span(@click="changeAttributePriority(attribute, priority)") {{ priority }}
+                    dotscale.row.col(v-for="(value, stat) in attributes[attribute].stats", :value="value", :stat="stat", :type="'attribute'", @input="attributes[attribute].stats[stat] = arguments[0]")
+            .data.col-3.row
+                p points spent calculations will go here. key off of character attribute? record bonus point expenditures etc there?
