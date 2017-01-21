@@ -3,20 +3,29 @@ var app;
 app = new Vue({
   el: '#app',
   data: {
-    // character1: {
-    //   details: {
-    //     name: '',
-    //     player: '',
-    //     characterType: 'solar',
-    //     caste: 'dawn',
-    //     concept: '',
-    //     anima: ''
-    //   },
+    // character: {
+    //   name: '',
+    //   player: '',
+    //   characterType: '',
+    //   caste: '',
+    //   concept: '',
+    //   anima: '',
+    //   willpower: 0, // make this into {temp:, perm:} if for use in play
+    //   essence: 1,
+    //   motes: {}, // computed? how would you save spent motes?
     //   attributes: {},
-    //   abilities: {},
+    //   experience: 0,
+    //   attributes: {},
+    //   abilities: {
+    //     list: {},
+    //     specialties: {},
+    //     additional: {}
+    //   },
     //   merits: {},
-    //   intimacies: {}
-    // },
+    //   intimacies: {},
+    //   charms: {},
+    //   equipment: {}
+    // }
     character: {
       name: '',
       player: '',
